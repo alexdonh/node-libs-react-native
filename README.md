@@ -10,6 +10,23 @@ This package provides React Native compatible implementations of Node core modul
 npm install --save node-libs-react-native
 ```
 
+
+### Additional step for iOS
+
+Automatic linking is done by adding the following pods into project's Podfile:
+
+```
+pod 'react-native-get-random-values', :path => '../node_modules/react-native-get-random-values'
+pod 'react-native-quick-base64', :path => '../node_modules/react-native-quick-base64'
+pod 'react-native-quick-crypto', :path => '../node_modules/react-native-quick-crypto'
+```
+
+Or alternatively, just include those libs in `package.json` and let React-Native find the corresponding `podspec`s:
+
+```
+npm install react-native-quick-crypto react-native-quick-base64 react-native-get-random-values
+```
+
 ## Usage
 
 This package exports a mapping of absolute paths to each module implementation, keyed by module name. Modules without React Native compatible implementations are `null`.
@@ -52,12 +69,12 @@ The following are the module implementations provided by this package. Some modu
 | Module | RN-compatible | Mock |
 |:--------:|:----------------------:|:-------------------:|
 | assert | [defunctzombie/commonjs-assert](https://github.com/defunctzombie/commonjs-assert) | --- |
-| buffer | [feross/buffer](https://github.com/feross/buffer) | [buffer.js](./mock/buffer.js) |
+| buffer | [craftzdog/react-native-buffer](https://github.com/craftzdog/react-native-buffer) | [buffer.js](./mock/buffer.js) |
 | child_process | --- | --- |
 | cluster | --- | --- |
 | console | [Raynos/console-browserify](https://github.com/Raynos/console-browserify) | [console.js](./mock/console.js) |
 | constants | [juliangruber/constants-browserify](https://github.com/juliangruber/constants-browserify) | --- |
-| crypto | [mvayngrib/react-native-crypto](https://github.com/mvayngrib/react-native-crypto) | --- |
+| crypto | [margelo/react-native-quick-crypto](https://github.com/margelo/react-native-quick-crypto) | --- |
 | dgram | --- | --- |
 | dns | --- | [dns.js](./mock/dns.js) |
 | domain | [bevry/domain-browser](https://github.com/bevry/domain-browser) | --- |
@@ -74,7 +91,7 @@ The following are the module implementations provided by this package. Some modu
 | querystring | [mike-spainhower/querystring](https://github.com/mike-spainhower/querystring) | --- |
 | readline | --- | --- |
 | repl | --- | --- |
-| stream | [nodejs/readable-stream](https://github.com/nodejs/readable-stream) | --- |
+| stream | [browserify/stream-browserify](https://github.com/browserify/stream-browserify) | --- |
 | string_decoder | [rvagg/string_decoder](https://github.com/rvagg/string_decoder) | --- |
 | sys | [defunctzombie/node-util](https://github.com/defunctzombie/node-util) | --- |
 | timers | [jryans/timers-browserify](https://github.com/jryans/timers-browserify) | --- |
@@ -84,6 +101,8 @@ The following are the module implementations provided by this package. Some modu
 | util | [defunctzombie/node-util](https://github.com/defunctzombie/node-util) | --- |
 | vm | --- | [vm.js](./mock/vm.js) |
 | zlib | [devongovett/browserify-zlib](https://github.com/devongovett/browserify-zlib) | --- |
+
+Additionally, `crypto.getRandomValues` is shimed by [LinusU/react-native-get-random-values](https://github.com/LinusU/react-native-get-random-values) and `base64` by [craftzdog/react-native-quick-base64](https://github.com/craftzdog/react-native-quick-base64)
 
 ## Other React Native Modules
 
