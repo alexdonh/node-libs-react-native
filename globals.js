@@ -1,3 +1,5 @@
+require('react-native-get-random-values');
+
 global.Buffer = require('buffer').Buffer;
 global.process = require('process');
 
@@ -9,6 +11,6 @@ global.location = {
 // Some modules expect userAgent to be a string
 global.navigator.userAgent = 'React Native';
 
-const { encode, decode } = require("base-64");
-global.atob = decode;
-global.btoa = encode;
+const { atob, btoa } = require("react-native-quick-base64");
+global.atob = atob;
+global.btoa = btoa;
