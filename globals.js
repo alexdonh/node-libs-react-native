@@ -12,7 +12,22 @@ global.location = {
 global.navigator.userAgent = 'React Native';
 
 const { atob, btoa } = require('react-native-quick-base64');
-global.atob = atob;
-global.btoa = btoa;
+const { encode, decode } = require('base-64');
+global.atob = (b64) => {
+  try {
+    return atob(b64);
+  }
+  catch {
+    return decode(b64);
+  }
+};
+global.btoa = (data) => {
+  try {
+    return btoa(data);
+  }
+  catch {
+    return encode(data);
+  }
+};
 
 require('fast-text-encoding');

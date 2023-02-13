@@ -10,6 +10,7 @@
   "dependencies": {
     "@craftzdog/react-native-buffer": "^6.0.5",
     "assert": "^2.0.0",
+    "base-64": "^1.0.0",
     "browserify-zlib": "^0.2.0",
     "buffer": "^6.0.3",
     "console-browserify": "^1.2.0",
