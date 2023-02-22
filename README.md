@@ -11,21 +11,15 @@ npm install --save node-libs-react-native
 ```
 
 
-### Additional step for iOS
-
-Automatic linking is done by adding the following pods into project's Podfile:
+### Peer dependencies required for automatic linking
 
 ```
-pod 'react-native-get-random-values', :path => '../node_modules/react-native-get-random-values'
-pod 'react-native-quick-base64', :path => '../node_modules/react-native-quick-base64'
-pod 'react-native-quick-crypto', :path => '../node_modules/react-native-quick-crypto'
+npm install react-native-quick-crypto react-native-fast-base64 react-native-get-random-values
 ```
 
-Or alternatively, just include those libs in `package.json` and let React-Native find the corresponding `podspec`s:
+## iOS
 
-```
-npm install react-native-quick-crypto react-native-quick-base64 react-native-get-random-values
-```
+Don't forget to run `pod install` in `ios` directory.
 
 ## Usage
 
@@ -44,6 +38,39 @@ module.exports = {
     extraNodeModules: require('node-libs-react-native'),
   },
 };
+```
+
+### Use with `ether.js`
+
+When using [ether.js](https://github.com/ethers-io/ethers.js) version 5.x, it's pbkdf2 browser version doesn't work well on React-Native (extremely slow). Fortunately there's a workaround:
+
+Create a `pbkdf2.js` at root dir:
+
+```js
+const crypto = require("react-native-quick-crypto");
+exports.pbkdf2 = crypto.pbkdf2Sync;
+```
+
+In `metro.config.js` set `resolver.resolveRequest` handler:
+
+```js
+module.exports = {
+  resolver: {
+    ...
+    resolveRequest: (context, moduleName, platform) => {
+      if (moduleName.startsWith('@ethersproject/pbkdf2')) {
+        return {
+          filePath: require.resolve('./pbkdf2.js'),
+          type: 'sourceFile',
+        };
+      }
+      // Optionally, chain to the standard Metro resolver.
+      return context.resolveRequest(context, moduleName, platform);
+    }
+  }
+  ...
+}
+
 ```
 
 For more information, see this post on [Node core modules in React Native][post].
@@ -69,7 +96,7 @@ The following are the module implementations provided by this package. Some modu
 | Module | RN-compatible | Mock |
 |:--------:|:----------------------:|:-------------------:|
 | assert | [defunctzombie/commonjs-assert](https://github.com/defunctzombie/commonjs-assert) | --- |
-| buffer | [craftzdog/react-native-buffer](https://github.com/craftzdog/react-native-buffer) | [buffer.js](./mock/buffer.js) |
+| buffer | [alexdonh/react-native-buffer](https://github.com/alexdonh/react-native-buffer) | [buffer.js](./mock/buffer.js) |
 | child_process | --- | --- |
 | cluster | --- | --- |
 | console | [Raynos/console-browserify](https://github.com/Raynos/console-browserify) | [console.js](./mock/console.js) |
@@ -102,7 +129,7 @@ The following are the module implementations provided by this package. Some modu
 | vm | --- | [vm.js](./mock/vm.js) |
 | zlib | [devongovett/browserify-zlib](https://github.com/devongovett/browserify-zlib) | --- |
 
-Additionally, `crypto.getRandomValues` is shimed by [LinusU/react-native-get-random-values](https://github.com/LinusU/react-native-get-random-values) and `base64` by [craftzdog/react-native-quick-base64](https://github.com/craftzdog/react-native-quick-base64)
+Additionally, `crypto.getRandomValues` is shimed by [LinusU/react-native-get-random-values](https://github.com/LinusU/react-native-get-random-values) and `base64` by [alexdonh/react-native-fast-base64](https://github.com/alexdonh/react-native-quick-base64)
 
 ## Other React Native Modules
 
