@@ -129,7 +129,7 @@ The following are the module implementations provided by this package. Some modu
 | vm | --- | [vm.js](./mock/vm.js) |
 | zlib | [devongovett/browserify-zlib](https://github.com/devongovett/browserify-zlib) | --- |
 
-Additionally, `crypto.getRandomValues` is shimed by [LinusU/react-native-get-random-values](https://github.com/LinusU/react-native-get-random-values) and `base64` by [alexdonh/react-native-fast-base64](https://github.com/alexdonh/react-native-quick-base64)
+Additionally, `crypto.getRandomValues` is shimed by [LinusU/react-native-get-random-values](https://github.com/LinusU/react-native-get-random-values) and `base64` by [alexdonh/react-native-fast-base64](https://github.com/alexdonh/react-native-fast-base64)
 
 ## Other React Native Modules
 
